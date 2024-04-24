@@ -36,8 +36,8 @@ class ComfyUI:
         ComfyUI_IPAdapter_plus.prepare()
 
     def start_server(self, output_directory, input_directory):
-        self.input_directory = input_directory
-        self.output_directory = output_directory
+         self.input_directory = input_directory
+         self.output_directory = output_directory
 
         self.download_pre_start_models()
 
@@ -46,13 +46,12 @@ class ComfyUI:
         )
         server_thread.start()
 
-        start_time = time.time()
+        print("Waiting for the server to start...")
         while not self.is_server_running():
-            if time.time() - start_time > 60:  # If more than a minute has passed
-                raise TimeoutError("Server did not start within 60 seconds")
-            time.sleep(1)  # Wait for 1 second before checking again
+            ime.sleep(1)  # Check every 1 second
 
         print("Server running")
+
 
     def run_server(self, output_directory, input_directory):
         command = f"python ./ComfyUI/main.py --output-directory {output_directory} --input-directory {input_directory} --disable-metadata"
