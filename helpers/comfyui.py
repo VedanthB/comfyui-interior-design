@@ -36,8 +36,8 @@ class ComfyUI:
         ComfyUI_IPAdapter_plus.prepare()
 
     def start_server(self, output_directory, input_directory):
-         self.input_directory = input_directory
-         self.output_directory = output_directory
+        self.input_directory = input_directory
+        self.output_directory = output_directory
 
         self.download_pre_start_models()
 
@@ -46,9 +46,11 @@ class ComfyUI:
         )
         server_thread.start()
 
-        print("Waiting for the server to start...")
+        start_time = time.time()
         while not self.is_server_running():
-            ime.sleep(1)  # Check every 1 second
+            if time.time() - start_time > 60:  # If more than a minute has passed
+                raise TimeoutError("Server did not start within 60 seconds")
+            time.sleep(1)  # Wait for 1 second before checking again
 
         print("Server running")
 
